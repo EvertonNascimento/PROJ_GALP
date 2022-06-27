@@ -18,3 +18,6 @@ variable "n_subnets" {
 
 variable "tags" {
 }
+
+variable "public_key" {
+}
