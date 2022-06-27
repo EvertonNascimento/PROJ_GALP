@@ -24,10 +24,12 @@ module "network" {
 }
 */
 
+
 module "instances" {
   source        = "../modules/terraform_aws_instances"
   ami           = var.ami # ubuntu 22.04 eu-west
   instance_type = var.instance_type
+  public_key = var.public_key
   #n_subnets = ceil((var.n_subnets)/2)
   n_subnets = var.n_subnets #3 is the max number of subnets
   bastion_subnet         = module.network.network_info.public_subnets[0]
