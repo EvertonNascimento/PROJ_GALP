@@ -57,4 +57,3 @@ output "public_key" {
 output "Load_balancer_HTTP_Content" {
   value = module.network.network_info.loadbalancer_dns
 }
-
