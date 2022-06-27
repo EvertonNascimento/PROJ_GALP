@@ -48,5 +48,8 @@ module "instances" {
     private_security_group = module.network.network_info.private_security_group
     bastion_security_group = module.network.network_info.bastion_security_group
     loadbalancer_sg = module.network.network_info.loadbalancer_sg
+    target_group_arn = module.network.network_info.target_group_arn
     
 }
+
+
