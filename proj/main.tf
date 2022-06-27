@@ -1,4 +1,4 @@
-#environment variables are setup before running
+#meter isto como environment variable
 provider "aws" {
  
 }
@@ -50,34 +50,3 @@ module "instances" {
     loadbalancer_sg = module.network.network_info.loadbalancer_sg
     
 }
-
-
-/*
-output "private_vms_ips" {
-
-    value = module.instances.private_vms_ips
-  
-}
-
-output "bastion_public_ip" {
-
-    value = module.instances.bastion_public_ip
-  
-}
-
-output "SSH_key_content" {
-  value = module.instances.ssh_key
-  
-}
-
-output "Load_balancer_http_Content" {
-
-  value = module.network.loadbalancer_dns
-  
-}
-
-output "user_names" {
-
-  value = module.instances.user_names
-  
-}*/
