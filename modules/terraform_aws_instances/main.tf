@@ -41,7 +41,7 @@ sudo chown -R ubuntu:ubuntu /var/www
 sudo chmod 2775 /var/www
 find /var/www -type d -exec chmod 2775 {} \;
 find /var/www -type f -exec chmod 0664 {} \;
-echo "<\!DOCTYPE html><html><body><p>Hello World at "$(date +"%Y-%m-%d")"</p></body></html>" > /var/www/html/index.html
+echo "<!DOCTYPE html><html><body><p>Hello World at "$(date +"%Y-%m-%d")"</p></body></html>" > /var/www/html/index.html
 EOF
 }
 
