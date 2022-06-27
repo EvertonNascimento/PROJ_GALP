@@ -281,3 +281,31 @@ resource "aws_route_table_association" "private_association" {
   subnet_id      = aws_subnet.privsub[count.index].id
   route_table_id = aws_route_table.rt_nat_outbound.id
 }
+
+
+resource "aws_lb_listener" "alb_listener" {
+  load_balancer_arn = aws_lb.alb.arn
+  port              = "80"
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.private_target_group.arn
+  }
+}
+
+resource "aws_lb_listener_rule" "alb_listen_rule" {
+  listener_arn = aws_lb_listener.alb_listener.arn
+  priority     = 100
+
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.private_target_group.arn
+  }
+
+  condition {
+    path_pattern {
+      values = ["/"]
+    }
+  }
+}
