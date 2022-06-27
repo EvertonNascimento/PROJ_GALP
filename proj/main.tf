@@ -1,4 +1,4 @@
-#meter isto como environment variable
+#environment variables are setup before running
 provider "aws" {
  
 }
