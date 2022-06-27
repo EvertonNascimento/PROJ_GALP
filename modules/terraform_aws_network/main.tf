@@ -38,10 +38,20 @@ resource "aws_route_table" "rt_internet_gateway" {
   }
 }
 
+
 resource "aws_security_group" "public_sg" {
   name        = "public_sg"
   description = "public sg"
   vpc_id      = aws_vpc.my_vpc.id
+
+  
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
 
   tags = {
     Name = "public_sg"
@@ -76,6 +86,15 @@ resource "aws_security_group" "private_sg" {
   description = "Allow TLS inbound traffic"
   vpc_id      = aws_vpc.my_vpc.id
 
+  
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
   tags = {
     Name = "private_sg"
   }
@@ -86,6 +105,15 @@ resource "aws_security_group" "bastion_sg" {
   name        = "bastion_sg"
   description = "bastion_sg"
   vpc_id      = aws_vpc.my_vpc.id
+
+  
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
 
   tags = {
     Name = "bastion_sg"
@@ -207,13 +235,22 @@ resource "aws_security_group" "loadbalancer_sg" {
   description = "security group of aplication load balancer"
   vpc_id      = aws_vpc.my_vpc.id
 
+  
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
 
   tags = {
     Name = "load balancer sg"
   }
 }
 
-#fazer as duas com as instancias
+
 resource "aws_lb_target_group" "private_target_group" {
   name     = "privatetargetgroup"
   port     = 80
