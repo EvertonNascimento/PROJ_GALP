@@ -32,3 +32,6 @@ variable "bastion_security_group" {
 
 variable "loadbalancer_sg" {
 }
+
+variable "target_group_arn" {
+}
