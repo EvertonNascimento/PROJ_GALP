@@ -244,47 +244,6 @@ resource "aws_lb" "alb" {
 }
 
 
-
-#para teste
-
-
-
-
-/*
-
-
-resource "aws_network_interface" "test_nic" {
-  subnet_id   = aws_subnet.pubsub.id
-  #private_ips = ["172.16.10.100"]
-
-  tags = {
-    Name = "test nic for pub ec2"
-  }
-}
-
-
-resource "aws_instance" "test_instance" {
-  ami           = "ami-052efd3df9dad4825" # ubuntu 22.04
-  instance_type = "t2.micro"
-
-  network_interface {
-    network_interface_id = aws_network_interface.test_nic.id
-    device_index         = 0
-        }
-}
-
-
-resource "aws_eip" "example_ip" {
-  vpc = true
-
-  instance                  = aws_instance.test_instance.id
-  associate_with_private_ip = "10.0.0.12"
-  depends_on                = [aws_internet_gateway.gw]
-}
-*/
-
-
-
 #outbound internet nat gateway
 resource "aws_nat_gateway" "nat_outbound" {
   #allocation_id = aws_eip.example_ip.id
