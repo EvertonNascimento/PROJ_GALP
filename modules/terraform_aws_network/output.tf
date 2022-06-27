@@ -10,10 +10,7 @@ output "network_info" {
     bastion_security_group = aws_security_group.bastion_sg.id
     loadbalancer_sg = aws_security_group.loadbalancer_sg.id
     target_group_arn = aws_lb_target_group.private_target_group.arn
+    loadbalancer_dns = aws_lb.alb.dns_name
   }
   description = "VPC id, List of all public, private and db subnet IDs"
-}
-
-output "loadbalancer_dns" {
-  value = aws_lb.alb.dns_name
 }
