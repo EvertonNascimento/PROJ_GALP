@@ -18,14 +18,6 @@ The module must response the following output variables:
 subnets, and any existing settings and resources related to the creation and configuration of networking in this module.
 
 */
-
-/*
-provider "aws" {
-  region = "us-east-1"
-  access_key = "AKIATEMBSVXNIGAP2DMN"
-  secret_key = "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"
-}
-
 */
 
 
