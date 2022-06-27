@@ -1,0 +1,38 @@
+{
+    "variables":{
+       "aws_access_key":"{{env `AWS_ACCESS_KEY_ID`}}",
+       "aws_secret_access_key":"{{env `AWS_SECRET_ACCESS_KEY`}}"
+    },
+    "builders":[
+       {
+          "type":"amazon-ebs",
+          "access_key":"AKIAYUZG4ZFIMF63PLQP",
+          "secret_key":"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",
+          "region":"eu-west-3",
+          "source_ami":"ami-09e513e9eacab10c1",
+          "instance_type":"t2.micro",
+          "ssh_username":"ubuntu",
+          "ami_name":"golden_image_{{timestamp}}"
+       }
+    ],
+    "provisioners":[
+       {
+          "type":"shell",
+          "inline":[
+             "sudo apt-get update",
+             "sudo apt-get install -y nginx"
+          ]
+       }
+    ],
+    "post-processors": [
+      {
+        "type": "manifest",
+        "output": "manifest.json",
+        "strip_path": true,
+        "custom_data": {
+          "my_custom_data": "example"
+        }
+      }
+    ]   
+ }
+ 
