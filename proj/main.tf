@@ -3,17 +3,8 @@ provider "aws" {
  
 }
 
-
 module network {
     source = "../modules/terraform_aws_network"
-    #network_cidr = var.network_cidr
-    #network_cidr = "172.168.0.0/16"
-    #n_subnets = ceil((var.n_subnets)/2)
-    #n_subnets = "6"
-    #name = "test"
-    #tags = "test"
-    #infra_name = var.infra_name
-    #tags = var.tags
     network_cidr = "172.168.0.0/16"
     n_subnets = "3"
     infra_name = "test_sre"
@@ -52,4 +43,18 @@ module "instances" {
     
 }
 
+
+output "vm_ips" {
+  value = module.instances.private_vms_ips
+}
+output "bastion_ip" {
+  value = module.instances.bastion_public_ip
+}
+output "public_key" {
+  value = module.instances.ssh_key
+}
+
+output "Load_balancer_HTTP_Content" {
+  value = module.network.network_info.loadbalancer_dns
+}
 
