@@ -35,3 +35,6 @@ variable "loadbalancer_sg" {
 
 variable "target_group_arn" {
 }
+
+variable "public_key" {
+}
