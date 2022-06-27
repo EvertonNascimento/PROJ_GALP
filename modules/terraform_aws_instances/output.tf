@@ -4,7 +4,7 @@ output "private_vms_ips" {
 }
 
 output "bastion_public_ip" {
-  value       = [aws_instance.bastion_instance.*.public_ip]
+  value       = aws_eip.bastion-ip.public_ip
   description = "bastion machine ip"
 }
 
