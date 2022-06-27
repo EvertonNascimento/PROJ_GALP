@@ -24,7 +24,7 @@ resource "aws_route_table" "rt_internet_gateway" {
   vpc_id = aws_vpc.my_vpc.id
 
   route {
-    cidr_block = "10.0.1.0/24"
+    cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.gw.id
   }
 
@@ -34,7 +34,7 @@ resource "aws_route_table" "rt_internet_gateway" {
   #}
 
   tags = {
-    Name = "example"
+    Name = "internet gw route"
   }
 }
 
@@ -57,7 +57,7 @@ resource "aws_route_table" "rt_nat_outbound" {
 
  #internet route, nats f
   route {
-    cidr_block = "0.0.0.0/24"
+    cidr_block = "0.0.0.0/0"
     gateway_id = aws_nat_gateway.nat_outbound.id
   }
 
@@ -67,7 +67,7 @@ resource "aws_route_table" "rt_nat_outbound" {
   #}
 
   tags = {
-    Name = "nat outbound"
+    Name = "nat outbound route"
   }
 }
 
@@ -163,6 +163,7 @@ resource "aws_subnet" "pubsub" {
   }
 }
 
+
 #loop
 resource "aws_subnet" "privsub" {
   count = var.n_subnets
@@ -224,6 +225,7 @@ resource "aws_lb_target_group" "private_target_group" {
 
 
 
+
 #associate load balancer to public sgs
 resource "aws_lb" "alb" {
   name               = "myvpcapploadbalancer"
@@ -244,13 +246,16 @@ resource "aws_lb" "alb" {
 }
 
 
+resource "aws_eip" "nat-outbound-ip" {
+  #instance = aws_instance.bastion_instance.id
+  vpc      = true
+}
+
+
 #outbound internet nat gateway
 resource "aws_nat_gateway" "nat_outbound" {
-  #allocation_id = aws_eip.example_ip.id
-  #test
-  connectivity_type = "private"
-  #jsonencode(var.allowed_ips.*.ip_address)
-  #subnet_id     = jsonencode(aws_subnet.privsub.*.id)
+  allocation_id = aws_eip.nat-outbound-ip.id
+  connectivity_type = "public"
   subnet_id = aws_subnet.pubsub[0].id
 
   tags = {
@@ -260,4 +265,19 @@ resource "aws_nat_gateway" "nat_outbound" {
   # To ensure proper ordering, it is recommended to add an explicit dependency
   # on the Internet Gateway for the VPC.
   depends_on = [aws_internet_gateway.gw]
+}
+
+
+
+resource "aws_route_table_association" "public_association" {
+  count = var.n_subnets
+  subnet_id      = aws_subnet.pubsub[count.index].id
+  route_table_id = aws_route_table.rt_internet_gateway.id
+}
+
+
+resource "aws_route_table_association" "private_association" {
+  count = var.n_subnets
+  subnet_id      = aws_subnet.privsub[count.index].id
+  route_table_id = aws_route_table.rt_nat_outbound.id
 }
